@@ -1,0 +1,21 @@
+This file explains the format with which my integrated CNV calling pipeline stores CNV calls, which I will use .tcnv as extension, standing for "tabular CNV"
+
+.tcnv will be a tab delimited rectangular data matrix with the following specification for individual columns. With Python's pandas' package, all data will be of the type "str" and numerical values to be converted to numerical data type only when computations are needed.
+
+column 1: sample_name
+    Sample name is defined to be the filename of the raw .bam file
+    For example, for '18-X-149.realigned.bam', the sample name will be
+    '18-X-149.realigned'
+column 2: chromosome
+    Name of the chromosome with the "chr" prefix
+column 3: start
+column 4: stop
+column 5: state
+    Either "del" or "dup", always lower case
+column 6: q_some
+    Phred-scaled quality of any CNV being in this interval
+    If not available, use "nan"
+column 7: caller
+    name of the caller algorithm
+
+Finally, there should not be row indices, but there will be a header
