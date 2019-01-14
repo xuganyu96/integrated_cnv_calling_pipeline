@@ -11,10 +11,12 @@
 ./conifer.sh
 
 # Consolidate results to a compilation
+# This python script will create the compiled/ directory if needed
+# so there is no need to create more
 python ./helper_methods/output_processing/call_compiler.py
 echo "Compiled results output to ./detectors_outputs/compiled/compiled_calls.tcnv"
 
 # Construct unions
 python ./helper_methods/output_processing/construct_union.py
-# EXPECTED output
-echo "EXPECTED 1521/54/3"
+# EXPECTED output for debugging
+# echo "EXPECTED 1521/54/3"
