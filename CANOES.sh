@@ -8,6 +8,12 @@
 # ./detectors_outputs/
 # When CANOES.sh is called, we need to construct these input/output file
 # locations
+# The entire CANOES pipeline will output to the following files
+# ./detectors_inputs/CANOES/canoes.reads.txt
+# ./detectors_inputs/CANOES/gc.txt
+# ./detectors_outputs/CANOES/CNV_calls_canoes.csv
+# ./detectors_outputs/CANOES/CNVplots.pdf
+# Therefore the following two directories need to be made
 mkdir ./detectors_inputs/CANOES/
 mkdir ./detectors_outputs/CANOES/
 

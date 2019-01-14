@@ -1,8 +1,13 @@
 #~/bin/bash
 
+# Because data_prep.sh will erase everything within ./detectors_inputs/
+# and ./detectors_outputs/ this script needs to create all needed directories
+# before anything can be output
+# The entire
+
 #########################################################################################################   COMPUTING PROBES  ################################
 ###############################################################################
-# First make calls to compile_probes.py to dgenerate probe file from BED file
+# First make calls to compile_probes.py to generate probe file from BED file
 echo "Converting capture targets to compatible probes at ./detectors_inputs/CoNIFER/probes.txt"
 python ./detectors/CoNIFER/compile_probes.py \
 `cat ./data/bed.list` \
