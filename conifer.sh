@@ -3,7 +3,19 @@
 # Because data_prep.sh will erase everything within ./detectors_inputs/
 # and ./detectors_outputs/ this script needs to create all needed directories
 # before anything can be output
-# The entire
+# The entire CoNIFER pipeline will output the following files
+# ./detectors_inputs/CoNIFER/probes.txt
+# ./detectors_inputs/CoNIFER/RPKM/*.rpkm.txt
+# ./detectors_inputs/CoNIFER/analysis.hfdf5
+# ./detectors_inputs/CoNIFER/singular_values.txt
+# ./detectors_inputs/CoNIFER/sd_values.txt
+# ./detectors_outputs/CoNIFER/calls.txt
+# ./detectors_outputs/conifer_calls.tcnv
+# However, after ./detectors_inputs/CoNIFER/ is created, compute_all_rpkm.sh
+# will create the subdirectory RPKM
+# As a result, the following directories need to be created
+mkdir ./detectors_inputs/CoNIFER/
+mkdir ./detectors_outputs/CoNIFER/
 
 #########################################################################################################   COMPUTING PROBES  ################################
 ###############################################################################
