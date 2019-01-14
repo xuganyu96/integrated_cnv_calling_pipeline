@@ -3,6 +3,16 @@
 # This script is intended to complete the entire CLAMMS pipeline with a single
 # script
 
+# Because data_prep.sh will erase everything with ./detectors_inputs/ and
+# ./detectors_outputs/ this script needs to make the directories of
+# the input and output files prior to their generation
+# First create the outermost two
+mkdir ./detectors_inputs/CLAMMS/
+mkdir ./detectors_outputs/CLAMMS/
+# All subdirectories will be created when input files are to be placed into
+# them, so there is no need to create them here
+
+
 ###############################################################################
 #############################  REFORMATTING  ##################################
 ###############################################################################
