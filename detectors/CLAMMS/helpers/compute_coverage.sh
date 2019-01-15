@@ -11,9 +11,9 @@ python ./detectors/CLAMMS/helpers/generate_bam_list.py
 mkdir ./detectors_inputs/CLAMMS/coverages/
 
 # Use xargs to maximize number of processes simultaneous operating on this task
+echo "[PROGRESS] Initializing parallelized depth of coverage computation"
 cat ./detectors_inputs/CLAMMS/no_prefix_bam.list \
 | xargs -P 0 --max-args 1 \
 ./detectors/CLAMMS/helpers/compute_single_coverage.sh
-
-# List bed files inside main/detectors_inputs/CLAMMS/coverages
-ls ./detectors_inputs/CLAMMS/coverages
+n_covs=`ls ./detectors_inputs/CLAMMS/coverages/ | wc -l`
+echo "[COMPLETE] Depth of coverage computed for ${n_covs} samples"

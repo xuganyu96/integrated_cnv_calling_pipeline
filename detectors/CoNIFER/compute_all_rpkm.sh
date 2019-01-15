@@ -8,10 +8,11 @@
 mkdir ./detectors_inputs/CoNIFER/RPKM/
 
 # Conduct the parallelization
+echo "[PROGRESS] Initializing parallelized computation of RPKM values"
 cat ./data/bam.list \
 | xargs -P 0 --max-args 1 \
 ./detectors/CoNIFER/compute_single_rpkm.sh
 
 # Print confirmation message
 n_rpkm=`ls ./detectors_inputs/CoNIFER/RPKM/*.txt | wc -l`
-echo "RPKM values computed for ${n_rpkm} samples"
+echo "[COMPLETE] RPKM values computed for ${n_rpkm} samples"

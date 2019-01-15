@@ -7,6 +7,8 @@
 # The bash script below is entirely copied from CLAMMS' github instructions
 NORM_COV_BED_DIR=./detectors_inputs/CLAMMS/coverages/normalized/
 
+echo "[PROGRESS] Constructing reference panels"
+
 ls $NORM_COV_BED_DIR | while read FILE;
 do
   NORM_COV_BED_PATH="${NORM_COV_BED_DIR}${FILE}"
@@ -15,4 +17,5 @@ do
 done >./detectors_inputs/CLAMMS/ref.panel.files.txt
 
 # Confirm the generation of the specified file
-ls ./detectors_inputs/CLAMMS/*.txt
+n_panels=`wc -l < ./detectors_inputs/CLAMMS/ref.panel.files.txt`
+echo "[COMPLETE] $n_panels found and used to construct reference panels"

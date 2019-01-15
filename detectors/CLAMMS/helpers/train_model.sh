@@ -18,9 +18,9 @@ REF_PANEL_PATH="./detectors_inputs/CLAMMS/ref.panel.files.txt"
 WINDOWS_PATH="./detectors_inputs/CLAMMS/windows.bed"
 OUTPUT_MODEL_PATH="./detectors_inputs/CLAMMS/models.bed"
 # Then invoke the model training
+echo "[PROGRESS] Training statistical model"
 $CLAMMS_DIR/fit_models $REF_PANEL_PATH \
 $WINDOWS_PATH \
 >$OUTPUT_MODEL_PATH
-
-# Print a confirmation message showing the successsful generate of the models
-ls ./detectors_inputs/CLAMMS/
+n_windows=`wc -l < $OUTPUT_MODEL_PATH`
+echo "[COMPLETE] Statistical model trained on $n_windows windows"

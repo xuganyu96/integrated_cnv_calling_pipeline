@@ -16,14 +16,6 @@ mkdir ./detectors_outputs/CLAMMS/
 ###############################################################################
 #############################  REFORMATTING  ##################################
 ###############################################################################
-
-# CLAMMS requires that human genome file, capture target file, and sample
-# alignment files have chromosome names purely numerical. Therefore, some
-# reformatting is required as a first step
-
-# Refresh the file list in main/data
-python ./helper_methods/data_prep_methods/generate_paths.py
-
 # First format the capture targets file; this should be very fast
 # format_bed.sh will take the .bed file listed by main/data/bed.list
 # remove the "chr" prefix if it is present, and then sort the entries
@@ -47,8 +39,8 @@ python ./helper_methods/data_prep_methods/generate_paths.py
 # X
 # Y
 # or something similar.
-echo "Reformatting capture targets"
-./detectors/CLAMMS/helpers/format_bed.sh
+# echo "Reformatting capture targets"
+# ./detectors/CLAMMS/helpers/format_bed.sh
 
 # Secondly format the human genome file ".fasta"; this should be reasonably
 # fast, although slower than the previous step
@@ -63,8 +55,8 @@ echo "Reformatting capture targets"
 # >22
 # >X
 # >Y
-echo "Reformatting human genome"
-./detectors/CLAMMS/helpers/format_fasta.sh
+# echo "Reformatting human genome"
+# ./detectors/CLAMMS/helpers/format_fasta.sh
 
 # Thirdly format the BAM files; individual BAM file will take significant
 # amount of time; fortunately, I learned a way to parallelize the computation
@@ -73,8 +65,11 @@ echo "Reformatting human genome"
 # and create 1 process for reformatting and indexing each original bam file
 # the formatted BAM file will be output to location similar to below
 # main/detectors_inputs/no_prefix_alignments/18-X-119.realigned.bam.no_prefix.bam
-echo "Reformatting sample alignments"
-./detectors/CLAMMS/helpers/format_bam.sh
+# echo "Reformatting sample alignments"
+# ./detectors/CLAMMS/helpers/format_bam.sh
+
+# All scripts above are now handled by a single command
+./detectors/CLAMMS/helpers/format_inputs.sh
 
 
 
@@ -90,7 +85,6 @@ echo "Reformatting sample alignments"
 # with default settings that output everything to the same directory as
 # the input fasta file; in this case everything is in
 # main/detectors_inputs/CLAMMS/no_prefix_genome/
-echo "Creating binary index for ./detectors_inputs/CLAMMS/no_prefix_genome/no_prefix.fasta"
 ./detectors/CLAMMS/helpers/index_reference.sh
 # This will take significant amount of time
 
@@ -106,7 +100,6 @@ echo "Creating binary index for ./detectors_inputs/CLAMMS/no_prefix_genome/no_pr
 # names for the mappability file, which should contain 1, 10-19, 2, 20, 21, 22
 # 3-9, X, Y in this order (and maybe some other none important contigs but
 # they are not important)
-echo "Computing mappability scores"
 ./detectors/CLAMMS/helpers/compute_mappability.sh
 
 
@@ -123,7 +116,6 @@ echo "Computing mappability scores"
 # NOTE: I tweaked calc_window_mappability to do differently if "string cannot
 # be converted to float" exception occurs; check back here if results are off
 #
-echo "Computing windows"
 ./detectors/CLAMMS/helpers/compute_windows.sh
 
 ###############################################################################
@@ -136,7 +128,7 @@ echo "Computing windows"
 # main/detectors_inputs/CLAMMS/coverages/18-X-134.realigned.bam.no_prefix.coverage.bed
 # The script compute_coverage.sh will list the bed files after completing the
 # computation
-echo "Computing depth of coverage"
+# echo "Computing depth of coverage"
 ./detectors/CLAMMS/helpers/compute_coverage.sh
 
 
@@ -148,7 +140,7 @@ echo "Computing depth of coverage"
 # average depth of coverage
 # The script normalize_coverage.sh will list the .norm.cov.bed files after
 # completing the normalization
-echo "Normalizing depth of coverage"
+# echo "Normalizing depth of coverage"
 ./detectors/CLAMMS/helpers/normalize_coverage.sh
 
 ###############################################################################
@@ -158,7 +150,7 @@ echo "Normalizing depth of coverage"
 # Train statistical models on the normalized coverage data
 # Note that train_model.sh, before training the model, first compute a file
 # of reference_panels by invoking a helper method ref_panels.sh
-echo "Generating reference panels and training models"
+# echo "Generating reference panels and training models"
 ./detectors/CLAMMS/helpers/train_model.sh
 
 ###############################################################################
@@ -170,11 +162,11 @@ echo "Generating reference panels and training models"
 # identifying presence of Y chromosome (or not)
 # The calls are stored in BED format and output to
 # main/detectors_outputs/CLAMMS/*.bed
-echo "Making CNV calls"
+# echo "Making CNV calls"
 ./detectors/CLAMMS/helper/call_all_cnvs.sh
 
 # Reformat the output using the python script
 python ./helper_methods/output_processing/clamms_call_formatter.py
 # print a confirmation message
 n_calls=`wc -l ./detectors_outputs/clamms_calls.tcnv`
-echo "${n_calls} CNV calls exported to main/detectors_outputs/clamms_calls.tcnv"
+echo "[COMPLETE] ${n_calls} CNV calls exported to main/detectors_outputs/clamms_calls.tcnv"

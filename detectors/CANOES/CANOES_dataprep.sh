@@ -2,34 +2,14 @@
 
 # This script is intended to invoke bedtools (a local installation) and GATK (another local installation) to perform the data preparation and process the BAM and BED files for later use in the R script
 
-# If the script is invoked from a terminal/script in /main directory, then this script will execute as if it were in /main directory; therefore, I will write this script as if it is in main directory
+# Invoke the read_count and gc_content script to compute read count and GC
+# content together (although read count will take significantly more time)
+# then GC content
+echo "[PROGRESS] Simultaneously starting the computation of read count data and GC content data"
+./detectors/CANOES/read_count.sh &
+./detectors/CANOES/gc_content.sh &
+./detectors/CANOES/read_count_tracker.sh
 
-# Test the output of the cat command from bash
-# cat bamlist_full
+# Print a confirmation message for the end of the read_count/gc_content process
+echo "[COMPLETE] All input file computation completed"
 
-# It is not guaranteed that the output directories are going to be there
-
-###############################################################################
-#########################  COMPUTE READ COUNTS  ###############################
-###############################################################################
-# Invoke bedtools to compute read counts
-./tools/bedtools2/bin/bedtools multicov \
--bams `cat ./data/bam.list` \
--bed `cat ./data/bed.list` \
--q 20 \
-> ./detectors_inputs/CANOES/canoes.reads.txt
-
-echo 'END OF BEDTOOLS'
-
-
-###############################################################################
-##########################  COMPUTE GC CONTENT  ###############################
-###############################################################################
-# Invoke GATK to compute GC content
-java -Xmx2000m -Djava.io.tempdir=TEMP -jar ./tools/gatk-3.8-1-0/GenomeAnalysisTK.jar \
--T GCContentByInterval \
--L `cat ./data/bed.list` \
--R `cat ./data/fasta.list` \
--o ./detectors_inputs/CANOES/gc.txt
-
-# This would be the end of the data prep phase

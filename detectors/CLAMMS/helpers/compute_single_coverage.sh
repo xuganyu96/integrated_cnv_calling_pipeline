@@ -31,14 +31,19 @@ cov_bed_path="./detectors_inputs/CLAMMS/coverages/${cov_bed_filename}"
 
 # Before computing depth of coverage, we need to index each of the no_prefix
 # bamfile
-echo "Indexing ${BAM_PATH}"
+echo "[PROGRESS] Indexing ${BAM_PATH}"
 samtools index $BAM_PATH
+echo "[COMPLETE] ${BAM_PATH} indexed"
 
 
 # Print confirmation message and do the computation
-echo "Computing depth of coverage for ${sample_name} and outputing to ${cov_bed_path}"
+echo "[PROGRESS] Computing depth of coverage for ${sample_name} and outputing to ${cov_bed_path}"
 samtools bedcov -Q 30 \
 ./detectors_inputs/CLAMMS/windows.bed \
 $BAM_PATH \
 | awk '{ printf "%s\t%d\t%d\t%.6g\n", $1, $2, $3, $NF/($3-$2); }' \
 > $cov_bed_path
+# Print confirmation message at the completion of a single depth of coverage
+# computation
+n_windows=`wc -l < $cov_bed_path`
+echo "[COMPLETE] Depth of coverage computed for $n_windows windows for ${sample_name}"

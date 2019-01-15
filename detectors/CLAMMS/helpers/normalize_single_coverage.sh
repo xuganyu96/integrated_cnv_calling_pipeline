@@ -14,8 +14,9 @@ sample_name="${sample_name%.*}" # Do again to remove the .coverage extension
 norm_cov_bed_output_path="./detectors_inputs/CLAMMS/coverages/normalized/${sample_name}.norm.cov.bed"
 
 # Print confirmation message, then perform the normalization
-echo "Normalizing ${COV_BED_PATH} and outputing to $norm_cov_bed_output_path"
+echo "[PROGRESS] Normalizing ${COV_BED_PATH} and outputing to $norm_cov_bed_output_path"
 ./detectors/CLAMMS/normalize_coverage \
 $COV_BED_PATH \
 ./detectors_inputs/CLAMMS/windows.bed \
 > $norm_cov_bed_output_path
+echo "[COMPLETE] ${COV_BED_PATH} normalized and output to $norm_cov_bed_output_path"

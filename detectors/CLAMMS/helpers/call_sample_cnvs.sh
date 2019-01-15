@@ -29,8 +29,12 @@ SAMPLE_SEX=`grep "^Y" $NORM_COV_PATH | awk '{ x += $4; n++; } END { if (x/n >= 0
 OUTPUT_PATH="./detectors_outputs/CLAMMS/${sample_name}.cnv.bed"
 
 # Print confirmation message and make calls
-echo "Making CNV calls from ${sample_name} with sex option ${SAMPLE_SEX} and outputing to ${OUTPUT_PATH}"
+echo "[PROGRESS] Making CNV calls from ${sample_name} with sex option ${SAMPLE_SEX} and outputing to ${OUTPUT_PATH}"
 $CLAMMS_DIR/call_cnv $NORM_COV_PATH \
 $MODEL_PATH \
 --sex $SAMPLE_SEX\
 >$OUTPUT_PATH
+# Tally the number of the CNVs called on this sample and print completion
+# message
+n_calls=`wc -l < $OUTPUT_PATH`
+echo "[COMPLETE] $n_calls CNV calls made for ${sample_name}"

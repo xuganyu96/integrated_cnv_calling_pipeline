@@ -63,14 +63,16 @@ head(xcnvs, 2)
 # output to file
 write.csv(xcnvs, file = './detectors_outputs/CANOES/CNV_calls_canoes.csv')
 
-# Plot all CNV calls
-pdf('./detectors_outputs/CANOES/CNVplots.pdf')
-for (i in 1:nrow(xcnvs)){
-  PlotCNV(canoes.reads, xcnvs[i, "SAMPLE"], xcnvs[i, "TARGETS"])
-}
-dev.off()
+# I find the plots and the genotyping to be not very important
+# so I will comment them out
+# # Plot all CNV calls
+# pdf('./detectors_outputs/CANOES/CNVplots.pdf')
+# for (i in 1:nrow(xcnvs)){
+#   PlotCNV(canoes.reads, xcnvs[i, "SAMPLE"], xcnvs[i, "TARGETS"])
+# }
+# dev.off()
 
-# Genotype all the CNV calls made in the sample
-genotyping.S1 <- GenotypeCNVs(xcnvs, "S1", canoes.reads)
-# Inspect the genotype scores for the first two calls
-head(genotyping.S1, 2)
+# # Genotype all the CNV calls made in the sample
+# genotyping.S1 <- GenotypeCNVs(xcnvs, "S1", canoes.reads)
+# # Inspect the genotype scores for the first two calls
+# head(genotyping.S1, 2)

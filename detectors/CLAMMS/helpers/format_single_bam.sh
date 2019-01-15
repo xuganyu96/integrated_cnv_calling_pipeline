@@ -20,14 +20,13 @@ no_prefix_filename="${filename}.no_prefix.bam"
 no_prefix_output_path="./detectors_inputs/CLAMMS/no_prefix_alignments/${no_prefix_filename}"
 
 # Print a confirmation message and start reformatting
-echo "Reformatting ${BAM_PATH} and outputing to ${no_prefix_output_path}"
+echo "[PROGRESS] Reformatting ${BAM_PATH} and outputing to ${no_prefix_output_path}"
 samtools view -h $BAM_PATH \
 | sed 's/chr//g' \
 | samtools view -Shb - -o $no_prefix_output_path
+echo "[COMPLETE] Sample alignment successfully reformatted and output to ${no_prefix_output_path}"
 
 # Compute the reformatted BAM file's index
-echo "Indexing reformatted BAM file at ${no_prefix_output_path}"
+echo "[PROGRESS] Indexing sample alignment at ${no_prefix_output_path}"
 samtools index ${no_prefix_output_path}
-
-# Print a confirmation message for completing a task
-echo "Reformatted and indexed file successfully output to ${no_prefix_output_path}"
+echo "[COMPLETE] Sample alignment indexed at ${no_prefix_output_path}.bai"
