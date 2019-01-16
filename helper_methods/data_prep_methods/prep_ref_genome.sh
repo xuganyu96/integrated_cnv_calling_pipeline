@@ -6,6 +6,9 @@
 
 ref_genome_path=`cat ./data/fasta.list`
 
+# Remove previous dictionary file
+rm ./data/human_genome/*.dict
+
 # Do samtools indexing and Picard dictionary together
 echo "[PROGRESS] Simutaneously creating samtools index and Picard dictionary for $ref_genome_path"
 ./tools/samtools-1.9/bin/samtools faidx $ref_genome_path &

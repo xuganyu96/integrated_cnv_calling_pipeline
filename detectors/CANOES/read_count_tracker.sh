@@ -30,7 +30,7 @@ sleep_sec=0.5
 # print the current progress, then sleep for 1 second
 while [ $n_processed -lt $n_targets ]; do
   # Update the number of lines in reads.canoes.txt
-  n_processed=$(wc -l < ./detectors_inputs/CANOES/canoes.reads.txt)
+  n_processed=$(wc -l < ./detectors_inputs/CANOES/18-X-011.realigned.reads.txt)
   # Print the current progress
   echo "[PROGRESS] Read count computed for ${n_processed} / ${n_targets} intervals"
   # Sleep for specified number of seconds

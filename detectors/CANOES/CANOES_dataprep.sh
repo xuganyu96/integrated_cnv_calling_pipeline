@@ -7,8 +7,7 @@
 # then GC content
 echo "[PROGRESS] Simultaneously starting the computation of read count data and GC content data"
 ./detectors/CANOES/read_count.sh &
-./detectors/CANOES/gc_content.sh &
-./detectors/CANOES/read_count_tracker.sh
+./detectors/CANOES/gc_content.sh
 
 # Print a confirmation message for the end of the read_count/gc_content process
 echo "[COMPLETE] All input file computation completed"

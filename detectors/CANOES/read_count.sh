@@ -8,11 +8,18 @@
 echo "[PROGRESS] Computing read count data and outputing to ./detectors_inputs/CANOES/canoes.reads.txt"
 
 # Invoke bedtools to compute read counts
-./tools/bedtools2/bin/bedtools multicov \
--bams `cat ./data/bam.list` \
--bed `cat ./data/bed.list` \
--q 20 \
-> ./detectors_inputs/CANOES/canoes.reads.txt
+cat ./data/bam.list \
+| xargs -P 0 --max-args 1 \
+./detectors/CANOES/read_count_single.sh
+
+# We need another Python script for stitching individual .part read count data
+# into the real canoes.reads.txt
+echo "[PROGRESS] Stitching individual read count data"
+python ./detectors/CANOES/stitch_reads.py
+echo "[COMPLETE] Read count data stitched"
+
+# Remove the .part files to save space
+rm ./detectors_inputs/CANOES/*.part
 
 # Print a confirmation message for finishing the process
 n_targets=`wc -l < ./detectors_inputs/CANOES/canoes.reads.txt`
